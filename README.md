@@ -1,5 +1,5 @@
 # VerhoBot
-
+<img width="1536" height="1024" alt="verho_concept_design" src="https://github.com/user-attachments/assets/45290109-c627-40e5-b835-4a0c27403841" />
 <div align="center">
 
 ### The Tiny Bot That Opens and Closes Your Curtains for You
