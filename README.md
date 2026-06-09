@@ -1,6 +1,7 @@
 # VerhoBot
 <!-- <img width="1536" height="1024" alt="verho_concept_design" src="https://github.com/user-attachments/assets/45290109-c627-40e5-b835-4a0c27403841" /> -->
-<img width="1535" height="1024" alt="verhobot_o" src="https://github.com/user-attachments/assets/43d85bdf-04f0-4892-ae85-ce5a2008efa5" />
+<img width="1536" height="1024" alt="verho_b" src="https://github.com/user-attachments/assets/ea8144e8-805f-48bb-890e-384471ef9897" />
+
 <div align="center">
 
 ### The Tiny Bot That Opens and Closes Your Curtains for You
