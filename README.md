@@ -97,6 +97,9 @@ Just natural light at the right moment.
 
 ### Planned Mechanical Design
 
+<img width="1536" height="1024" alt="verhobot" src="https://github.com/user-attachments/assets/6d2637a9-d4e1-4b42-85a2-8fdb018bc2bb" />
+
+
 - Compact form factor
 - Rail-mounted operation
 - Existing curtain compatibility
