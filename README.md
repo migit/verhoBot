@@ -97,8 +97,7 @@ Just natural light at the right moment.
 
 ### Planned Mechanical Design
 
-<img width="1536" height="1024" alt="verhobot" src="https://github.com/user-attachments/assets/6d2637a9-d4e1-4b42-85a2-8fdb018bc2bb" />
-
+<img width="1536" height="1024" alt="vbot1" src="https://github.com/user-attachments/assets/3202e9c1-f443-4a04-8838-7c1d054d3fdf" />
 
 - Compact form factor
 - Rail-mounted operation
