@@ -1,6 +1,8 @@
 <!-- # VerhoBot
-<img width="1536" height="1024" alt="verho_concept_design" src="https://github.com/user-attachments/assets/45290109-c627-40e5-b835-4a0c27403841" /> -->
-<img width="1536" height="1024" alt="verho_b" src="https://github.com/user-attachments/assets/ea8144e8-805f-48bb-890e-384471ef9897" />
+<img width="1536" height="1024" alt="verho_concept_design" src="https://github.com/user-attachments/assets/45290109-c627-40e5-b835-4a0c27403841" /> 
+<img width="1536" height="1024" alt="verho_b" src="https://github.com/user-attachments/assets/ea8144e8-805f-48bb-890e-384471ef9897" /> -->
+<img width="1535" height="1024" alt="vbot" src="https://github.com/user-attachments/assets/ee001041-8415-46b3-afd2-778e4268ae52" />
+
 
 <div align="center">
 
