@@ -88,7 +88,7 @@ Just natural light at the right moment.
 
 | Component | Purpose |
 |------------|----------|
-| ESP32 | Main controller |
+| ESP32-C3 | Main controller |
 | Geared DC Motor | Curtain movement |
 | Motor Driver | Motor control |
 | Li-Ion Battery | Portable power |
