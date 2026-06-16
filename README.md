@@ -105,6 +105,8 @@ Just natural light at the right moment.
 - 3D-printable enclosure
 - Modular internal architecture
 
+[▶ VerhoBot enclosure and mechanical design](https://www.youtube.com/watch?v=YXQe8-dixHU)
+
 ---
 
 ## Software Roadmap
