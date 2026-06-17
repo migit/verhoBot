@@ -114,7 +114,7 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 ### schematic
 
-<img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/d349a27e-53e7-4dd9-ac19-76fd83b74afb" />
+<img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/dab667c9-d4ce-4847-ab22-8194f0a0e182" />
 
 
 ### Planned Mechanical Design
@@ -133,7 +133,8 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 ## Software Roadmap
 
-### Phase 1
+### Phase 1<img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/6379fd2f-8813-4941-b8e8-ee5fcdf05f7e" />
+
 
 - Basic motor control
 - Position calibration
