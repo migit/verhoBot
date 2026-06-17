@@ -133,7 +133,7 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 ## Software Roadmap
 
-### Phase 1<img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/6379fd2f-8813-4941-b8e8-ee5fcdf05f7e" />
+### Phase 1
 
 
 - Basic motor control
