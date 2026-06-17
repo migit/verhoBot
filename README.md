@@ -175,16 +175,15 @@ VerhoBot follows a few simple rules:
 
 ---
 
----
 
 ## Future versions may incorporate:
 
-Position sensing
-Motor current monitoring
-Automatic obstacle detection
-Endstop detection
-Environmental sensors
-Advanced power management
+- Position sensing
+- Motor current monitoring
+- Automatic obstacle detection
+- Endstop detection
+- Environmental sensors
+- Advanced power management
 
 ---
 
