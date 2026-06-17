@@ -22,13 +22,14 @@
 
 ## Overview
 
-Have you ever tried to sleep during the Finnish summer?
+VerhoBot is an open-source smart curtain robot designed to automate existing curtain rails using affordable, widely available hardware and fully customizable software.
 
-You know the problem.
+The project was born from a simple observation: many people use blackout curtains to improve sleep quality, but those same curtains prevent natural sunlight from entering the room when it is time to wake up. This challenge is particularly noticeable during the Finnish summer, when long daylight hours and bright nights can disrupt normal sleep patterns.
 
-The sun barely sets, the nights stay bright, and when you finally manage to fall asleep, your room starts filling with sunlight long before you're ready to wake up.
+VerhoBot addresses this problem by providing a compact robotic platform capable of opening and closing curtains automatically according to schedules, user commands, or future smart-home automations.
 
-Then, when morning actually arrives, your blackout curtains are doing their job a little too well.
+Unlike many commercial curtain robots, VerhoBot is designed from the beginning as an open-source project. Every aspect of the system including hardware design, firmware, mechanical components, and future software integrations is intended to be accessible, modifiable, and extensible by makers, students, engineers, and hobbyists.
+
 
 **VerhoBot** solves both problems.
 
@@ -79,6 +80,22 @@ VerhoBot combines the best of both worlds:
 No alarms.
 No bright phone screens.
 Just natural light at the right moment.
+The long-term vision of VerhoBot is to create a flexible, affordable, and fully open curtain automation platform that can evolve through community contributions.
+Rather than competing with commercial smarthome products, VerhoBot aims to give users complete ownership of their hardware, software, and data while remaining accessible to makers of all skill levels.
+
+## Comunity Goals
+
+The project aims to provide a practical open-source platform for learning:
+
+Embedded systems
+ESP32 development
+Mechanical design
+Battery-powered electronics
+IoT communication
+Smart-home integration
+Product development
+
+Whether you are building your first ESP32 project or developing advanced automation systems, VerhoBot should provide a foundation that is easy to understand, modify, and improve.
 
 ---
 
@@ -158,10 +175,22 @@ VerhoBot follows a few simple rules:
 
 ---
 
+---
+
+## Future versions may incorporate:
+
+Position sensing
+Motor current monitoring
+Automatic obstacle detection
+Endstop detection
+Environmental sensors
+Advanced power management
+
+---
+
 ## Contributing
 
 Contributions, ideas, testing feedback, and hardware improvements are welcome.
-
 As the project evolves, documentation, CAD files, schematics, and firmware source code will be published in this repository.
 
 ---
@@ -169,7 +198,6 @@ As the project evolves, documentation, CAD files, schematics, and firmware sourc
 ## License
 
 Distributed under the MIT License.
-
 See `LICENSE` for more information.
 
 ---
