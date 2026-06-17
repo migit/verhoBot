@@ -112,6 +112,11 @@ Whether you are building your first ESP32 project or developing advanced automat
 | USB-C Charger | Charging interface |
 | Position Sensors | Open/close detection |
 
+### schematic
+
+<img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/d349a27e-53e7-4dd9-ac19-76fd83b74afb" />
+
+
 ### Planned Mechanical Design
 
 <img width="1536" height="1024" alt="vbot1" src="https://github.com/user-attachments/assets/3202e9c1-f443-4a04-8838-7c1d054d3fdf" />
