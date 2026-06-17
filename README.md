@@ -15,6 +15,7 @@
 [![Platform](https://img.shields.io/badge/Platform-ESP32-red)]()
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)]()
 [![Made in Finland](https://img.shields.io/badge/Made%20for-Finnish%20Summer-003580)]()
+![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=migit.verhoBot)
 
 </div>
 
