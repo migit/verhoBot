@@ -130,6 +130,8 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 [▶ VerhoBot enclosure and mechanical design](https://www.youtube.com/watch?v=YXQe8-dixHU)
 
+Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
+
 ---
 
 ## Software Roadmap
