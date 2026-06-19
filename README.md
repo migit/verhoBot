@@ -214,6 +214,6 @@ See `LICENSE` for more information.
 
 ### VerhoBot
 
-*Built for the Finnish summer.Makers for Makers*
+*Built for the Finnish summer. Makers for Makers*
 
 </div>
