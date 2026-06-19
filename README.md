@@ -132,7 +132,7 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
-### Parts screen shot
+### Parts
 
 <img width="4080" height="3072" alt="VerhoBot_parts" src="https://github.com/user-attachments/assets/a81883dd-afa9-40b6-8be4-5f3731d33b52" />
 
