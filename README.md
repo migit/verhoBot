@@ -165,10 +165,20 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 ## Project Status
 
 ```text
+week 1
+
 Mechanical Design      ███████░░░  70%
 Electronics Design     ██████░░░░  60%
 Firmware Development   ███░░░░░░░  30%
 Testing                ░░░░░░░░░░   0%
+
+week (now) 2
+
+Mechanical Design      ████████░░  75%
+Electronics Design     ███████░░░  70%
+Firmware Development   ████░░░░░░  40%
+Testing                █░░░░░░░░░   5%
+
 ```
 
 Active development is ongoing.
