@@ -174,8 +174,8 @@ Testing                ░░░░░░░░░░   0%
 
 week 2 (now)
 
-Mechanical Design      ████████░░  75%
-Electronics Design     ███████░░░  70%
+Mechanical Design      ████████░░  80%
+Electronics Design     ████████░░  80%
 Firmware Development   ████░░░░░░  40%
 Testing                █░░░░░░░░░   5%
 
