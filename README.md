@@ -172,7 +172,7 @@ Electronics Design     ██████░░░░  60%
 Firmware Development   ███░░░░░░░  30%
 Testing                ░░░░░░░░░░   0%
 
-week (now) 2
+week 2 (now)
 
 Mechanical Design      ████████░░  75%
 Electronics Design     ███████░░░  70%
