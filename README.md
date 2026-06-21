@@ -106,12 +106,12 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 | Component | Purpose |
 |------------|----------|
-| ESP32-C3 | Main controller |
-| Geared DC Motor | Curtain movement |
-| Motor Driver | Motor control |
-| Li-Ion Battery | Portable power |
+| ESP32-C3 supermini | Main controller |
+| N20 Geared DC Motor (100 RPM 6V works best without loosing good torgue and speed) | Curtain movement |
+| Motor Driver (TB6612FNG is chosen for best effeciency and size form factor) | Motor control |
+| Li-Ion Battery (3.7v 300mAh is chosen) | Portable power |
 | USB-C Charger | Charging interface |
-| Position Sensors | Open/close detection |
+| Position Sensors (note yet decide, but position calibration is now done in the firmware for now : const uint32_t CURTAIN_TRAVEL_TIME = 4000;)| Open/close detection |
 
 ### schematic
 
