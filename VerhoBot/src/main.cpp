@@ -13,7 +13,7 @@ const char* password = "12345678";
 // Configuration
 // ======================================================
 
-const uint32_t CURTAIN_TRAVEL_TIME = 1000;
+const uint32_t CURTAIN_TRAVEL_TIME = 4000;
 const uint32_t MAX_RUN_TIME        = 8000;
 const float    BATTERY_CAL         = 2.08f;
 const uint8_t  ADC_SAMPLES         = 16;
