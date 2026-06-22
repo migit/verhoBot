@@ -184,12 +184,12 @@ Testing                █░░░░░░░░░   5%
 
 Week 3 (now )
 
-Mechanical Design ████████░░ 80%
-Electronics Design ████████░░ 80%
-Firmware Development ██████░░░░ 60%
-Testing ██░░░░░░░░ 20%
-Documentation ███████░░░ 70%
-Smart Home Features █░░░░░░░░░ 10%
+Mechanical Design      ████████░░ 80%
+Electronics Design     ████████░░ 80%
+Firmware Development   ██████░░░░ 60%
+Testing                ██░░░░░░░░ 20%
+Documentation          ███████░░░ 70%
+Smart Home Features    █░░░░░░░░░ 10%
 
 ```
 
