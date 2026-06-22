@@ -107,7 +107,7 @@ Whether you are building your first ESP32 project or developing advanced automat
 | Component | Purpose |
 |------------|----------|
 | ESP32-C3 supermini | Main controller |
-| N20 Geared DC Motor (100 RPM 6V works best without loosing good torgue and speed) | Curtain movement |
+| N20 Geared DC Motor (100 RPM 6V works best without loosing good torque and speed) | Curtain movement |
 | Motor Driver (TB6612FNG is chosen for best effeciency and size form factor) | Motor control |
 | Li-Ion Battery (3.7v 300mAh is chosen) | Portable power |
 | USB-C Charger | Charging interface |
