@@ -128,7 +128,9 @@ Whether you are building your first ESP32 project or developing advanced automat
 - 3D-printable enclosure
 - Modular internal architecture
 
-[▶ VerhoBot enclosure and mechanical design](https://www.youtube.com/watch?v=YXQe8-dixHU)
+[▶ Video demo VerhoBot enclosure and mechanical design](https://www.youtube.com/watch?v=YXQe8-dixHU)
+[▶ Video build steps coming soon...](#)
+
 
 Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
