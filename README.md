@@ -169,9 +169,9 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
 ```text
 
-v0.7  -> Firmware complete
-v0.8  -> Testing and tuning
-v0.9  -> Smart home integration
+v_0.1.0-beta1.2  -> Firmware complete
+v_0.1.0-beta1.1  -> Testing and tuning
+v_0.1.0-beta1  -> Smart home integration
 v1.0  -> Stable release
 
 ```
