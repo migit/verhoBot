@@ -168,28 +168,11 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 ## Project Status
 
 ```text
-week 1
 
-Mechanical Design      ███████░░░  70%
-Electronics Design     ██████░░░░  60%
-Firmware Development   ███░░░░░░░  30%
-Testing                ░░░░░░░░░░   0%
-
-week 2 
-
-Mechanical Design      ████████░░  80%
-Electronics Design     ████████░░  80%
-Firmware Development   ████░░░░░░  40%
-Testing                █░░░░░░░░░   5%
-
-Week 3 (now )
-
-Mechanical Design      ████████░░ 80%
-Electronics Design     ████████░░ 80%
-Firmware Development   ██████░░░░ 60%
-Testing                ██░░░░░░░░ 20%
-Documentation          ███████░░░ 70%
-Smart Home Features    █░░░░░░░░░ 10%
+v0.7  -> Firmware complete
+v0.8  -> Testing and tuning
+v0.9  -> Smart home integration
+v1.0  -> Stable release
 
 ```
 
