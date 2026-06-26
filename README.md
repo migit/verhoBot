@@ -14,6 +14,8 @@
 [![License](https://img.shields.io/badge/License-MIT-blue)]()
 [![Platform](https://img.shields.io/badge/Platform-ESP32-red)]()
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)]()
+![OSHWA Certified](https://img.shields.io/badge/OSHWA-FI000004-brightgreen)
+
 [![Made in Finland](https://img.shields.io/badge/Made%20for-Finnish%20Summer-003580)]()
 ![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=migit.verhoBot)
 
@@ -217,6 +219,18 @@ As the project evolves, documentation, CAD files, schematics, and firmware sourc
 
 Distributed under the MIT License.
 See `LICENSE` for more information.
+
+
+VerhoBot has been officially certified as Open Source Hardware by the Open Source Hardware Association (OSHWA).
+
+- **Certification UID:** FI000004
+- **Certification Date:** 2026
+- **Status:** OSHWA Certified Open Source Hardware
+
+This project complies with the Open Source Hardware Definition and all design files are publicly available.
+For more information about Open Source Hardware certification, visit the Open Source Hardware Association (OSHWA).
+
+[<img width="147" height="42" alt="OSHWA Certified Open Source Hardware FI000004" src="https://github.com/user-attachments/assets/a9026b4a-a719-42a9-8c82-fcb286305578" />](https://certification.oshwa.org/fi000004.html)
 
 ---
 
