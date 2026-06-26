@@ -171,7 +171,7 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
 v_0.1.0-beta1.2  -> Firmware complete
 v_0.1.0-beta1.1  -> Testing and tuning
-v_0.1.0-beta1  -> Smart home integration
+v_0.1.0-beta1  ->   Manual open/close control
 v1.0  -> Stable release
 
 ```
