@@ -171,6 +171,13 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
 <img width="1264" height="833" alt="op_mode" src="https://github.com/user-attachments/assets/f6f8d905-06a9-4c95-84db-494406e7b41f" />
 
+## How it suppose to behave:
+First boot → AP VerhoBot-Setup → dashboard at 192.168.4.1 → click ⚙ to enter WiFi & schedule → save → reboot.
+Normal operation → connects to home WiFi → syncs time → sleeps.
+Scheduled wake → moves curtain → starts web server → stays awake 60 s → sleeps.
+Button wake → toggles curtain → starts web server → stays awake 60 s → sleeps.
+During the 60‑second awake window, you can open your browser, go to the device’s IP (shown in Serial), and see the full dashboard, control the curtain, and check telemetry.
+After 60 s of inactivity, it goes back to deep sleep.
 
 ## Project Status
 
