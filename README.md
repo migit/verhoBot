@@ -167,6 +167,11 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
 ---
 
+## Planned operation
+
+<img width="1264" height="833" alt="op_mode" src="https://github.com/user-attachments/assets/f6f8d905-06a9-4c95-84db-494406e7b41f" />
+
+
 ## Project Status
 
 ```text
