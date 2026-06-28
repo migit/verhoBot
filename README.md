@@ -169,7 +169,9 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
 ## Planned operation
 
-<img width="1264" height="833" alt="op_mode" src="https://github.com/user-attachments/assets/f6f8d905-06a9-4c95-84db-494406e7b41f" />
+<!-- <img width="1264" height="833" alt="op_mode" src="https://github.com/user-attachments/assets/f6f8d905-06a9-4c95-84db-494406e7b41f" /> -->
+<img width="969" height="1033" alt="VerhoBot - visual selection" src="https://github.com/user-attachments/assets/88effa7d-0860-4459-9377-e51b27e27843" />
+
 
 ## How it suppose to behave:
 - First boot → AP VerhoBot-Setup → dashboard at 192.168.4.1 → click ⚙ to enter WiFi & schedule → save → reboot.
