@@ -45,24 +45,31 @@ uint32_t awakeStart = 0;
 const uint32_t AWAKE_TIMEOUT = 60000;  // 60 seconds after motor stops
 
 // ============================================================
-//  Motor control (non‑blocking)
+//  Motor control (non‑blocking, PWM soft start / soft stop)
 // ============================================================
+// PWMA is driven via LEDC instead of digitalWrite so we can ramp the duty
+// cycle. Direction pins (AIN1/AIN2) stay as plain digital outputs.
+
+void motorSetDuty(uint8_t duty) {
+    ledcWrite(PWMA, duty);
+}
+
 void motorOpen() {
     digitalWrite(AIN1, HIGH);
     digitalWrite(AIN2, LOW);
-    digitalWrite(PWMA, HIGH);
+    motorSetDuty(0); // ramp handled by updateMotor()
 }
 
 void motorClose() {
     digitalWrite(AIN1, LOW);
     digitalWrite(AIN2, HIGH);
-    digitalWrite(PWMA, HIGH);
+    motorSetDuty(0); // ramp handled by updateMotor()
 }
 
 void motorStop() {
     digitalWrite(AIN1, LOW);
     digitalWrite(AIN2, LOW);
-    digitalWrite(PWMA, LOW);
+    motorSetDuty(0);
 }
 
 void startOpen(uint32_t ms) {
@@ -95,11 +102,38 @@ void stopMotor() {
     awakeStart = millis(); // start the 60‑second countdown
 }
 
+// Linearly ramps duty from `from` to `to` over [0, rampMs] given `elapsed`.
+static uint8_t rampDuty(uint32_t elapsed, uint32_t rampMs, uint8_t from, uint8_t to) {
+    if (rampMs == 0 || elapsed >= rampMs) return to;
+    float t = (float)elapsed / (float)rampMs;
+    return (uint8_t)(from + t * ((float)to - (float)from));
+}
+
 void updateMotor() {
     if (state == IDLE) return;
+
     uint32_t elapsed = millis() - moveStart;
-    if (elapsed >= moveDuration || elapsed >= MAX_RUN_TIME)
+
+    if (elapsed >= moveDuration || elapsed >= MAX_RUN_TIME) {
         stopMotor();
+        return;
+    }
+
+    uint32_t remaining = moveDuration - elapsed;
+
+    uint8_t duty;
+    if (elapsed < MOTOR_RAMP_UP_MS) {
+        // Soft start: 0 -> full speed
+        duty = rampDuty(elapsed, MOTOR_RAMP_UP_MS, 0, PWM_MAX_DUTY);
+    } else if (remaining < MOTOR_RAMP_DOWN_MS) {
+        // Soft stop: full speed -> min duty (stopMotor() cuts the rest cleanly)
+        uint32_t decelElapsed = MOTOR_RAMP_DOWN_MS - remaining;
+        duty = rampDuty(decelElapsed, MOTOR_RAMP_DOWN_MS, PWM_MAX_DUTY, MOTOR_MIN_DUTY);
+    } else {
+        duty = PWM_MAX_DUTY;
+    }
+
+    motorSetDuty(duty);
 }
 
 // ============================================================
@@ -151,7 +185,11 @@ void clearConfig() {
 // ============================================================
 bool syncTime() {
     if (WiFi.status() != WL_CONNECTED) return false;
-    configTime(0, 0, "pool.ntp.org", "time.google.com");
+    // Use a POSIX TZ string (see pins.h) instead of raw UTC offsets so DST
+    // is handled automatically. Previously this called configTime(0, 0, ...),
+    // which left the RTC in UTC and made scheduled open/close times silently
+    // off by 2-3 hours in Finland depending on the time of year.
+    configTzTime(TIMEZONE_STRING, "pool.ntp.org", "time.google.com");
     time_t now = time(nullptr);
     int attempts = 0;
     while (now < 8 * 3600 * 2 && attempts < 30) {
@@ -752,7 +790,7 @@ void setup() {
 
     pinMode(AIN1, OUTPUT);
     pinMode(AIN2, OUTPUT);
-    pinMode(PWMA, OUTPUT);
+    ledcAttach(PWMA, PWM_FREQ, PWM_RESOLUTION_BITS); // arduino-esp32 core 3.x LEDC API
     pinMode(STBY, OUTPUT);
     digitalWrite(STBY, HIGH);
     motorStop();

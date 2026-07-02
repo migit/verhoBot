@@ -19,4 +19,18 @@
 #define BATTERY_CAL          2.08f // voltage divider factor
 #define ADC_SAMPLES          16
 
+// ---- Motor PWM (soft start / soft stop) ----
+#define PWM_FREQ              20000  // 20kHz, above audible range
+#define PWM_RESOLUTION_BITS   8      // duty range 0-255
+#define PWM_MAX_DUTY          ((1 << PWM_RESOLUTION_BITS) - 1)
+#define MOTOR_RAMP_UP_MS      300    // time to reach full speed from stop
+#define MOTOR_RAMP_DOWN_MS    300    // time to decelerate before a scheduled stop
+#define MOTOR_MIN_DUTY        60     // duty floor while ramping (below this the motor may stall, not spin)
+
+// ---- Timezone (POSIX TZ string) ----
+// Default: Europe/Helsinki (EET/EEST with automatic DST).
+// Change this if you build VerhoBot outside Finland.
+// Reference table: https://github.com/nayarsystems/posix_tz_db
+#define TIMEZONE_STRING "EET-2EEST,M3.5.0/3,M10.5.0/4"
+
 #endif
