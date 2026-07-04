@@ -34,9 +34,4 @@
 // Reference table: https://github.com/nayarsystems/posix_tz_db
 #define TIMEZONE_STRING "EET-2EEST,M3.5.0/3,M10.5.0/4"
 
-// ---- WiFi connection / recovery timing ----
-#define WIFI_CONNECT_TIMEOUT_MS   15000              // how long to try joining the saved network
-#define AP_FALLBACK_TIMEOUT_MS    (5UL*60UL*1000UL)  // give up on fallback AP + go back to sleep after this
-#define UNSYNCED_RETRY_SEC        (15UL*60UL)        // retry interval when NTP sync fails (clock can't be trusted for scheduling)
-
 #endif
