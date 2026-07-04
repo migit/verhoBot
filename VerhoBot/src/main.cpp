@@ -277,6 +277,8 @@ uint64_t calculateSleepSeconds() {
     return computeNextEvent().secondsUntil;
 }
 
+bool inFallbackAP = false; // true only when AP is up because STA failed post-config (see below)
+
 void enterDeepSleep() {
     Serial.println("Entering deep sleep...");
     delay(100);
@@ -289,8 +291,20 @@ void enterDeepSleep() {
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
 
-    NextEvent ev = computeNextEvent();
-    esp_sleep_enable_timer_wakeup(ev.secondsUntil * 1000000ULL);
+    bool timeSynced = (time(nullptr) > 8 * 3600);
+    uint64_t sleepSec;
+    if (timeSynced) {
+        sleepSec = computeNextEvent().secondsUntil;
+    } else {
+        // Clock isn't trustworthy (WiFi/NTP failed this cycle) - computing a
+        // schedule-based sleep duration from an unsynced clock (effectively
+        // Jan 1 1970) could sleep for a wildly wrong number of hours. Retry
+        // again shortly instead of trusting it.
+        sleepSec = UNSYNCED_RETRY_SEC;
+        Serial.println("Clock not synced - using a short fixed retry interval instead of the schedule.");
+    }
+
+    esp_sleep_enable_timer_wakeup(sleepSec * 1000000ULL);
 
     // The ESP32-C3 is RISC-V and has no dedicated RTC GPIO mux, so it
     // doesn't support ext0/ext1 wakeup sources the way the original ESP32,
@@ -301,9 +315,11 @@ void enterDeepSleep() {
     esp_deep_sleep_enable_gpio_wakeup(1ULL << WAKE_BUTTON_PIN, ESP_GPIO_WAKEUP_GPIO_LOW);
 #endif
 
-    Serial.printf("Sleeping for %llu seconds until %s at %02d:%02d\n",
-                  ev.secondsUntil, ev.isOpenEvent ? "OPEN" : "CLOSE",
-                  ev.hour, ev.minute);
+    if (timeSynced) {
+        Serial.printf("Sleeping for %llu seconds (schedule-based)\n", sleepSec);
+    } else {
+        Serial.printf("Sleeping for %llu seconds (retry, clock unsynced)\n", sleepSec);
+    }
     Serial.flush();
 
     esp_deep_sleep_start();
@@ -1257,6 +1273,32 @@ void startWebServer() {
 // ============================================================
 //  Main Setup
 // ============================================================
+// Try to join the saved network, bounded by a real timeout (previously this
+// was a hardcoded 20*250ms = 5s spin in three separate places).
+bool connectSTA(uint32_t timeoutMs) {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(wifiSSID.c_str(), wifiPass.c_str());
+    uint32_t start = millis();
+    while (WiFi.status() != WL_CONNECTED && millis() - start < timeoutMs) {
+        delay(200);
+    }
+    return WiFi.status() == WL_CONNECTED;
+}
+
+// If the saved credentials don't work, re-open the setup AP instead of
+// leaving the device unreachable on both its own AP and the target network.
+// This only fires for post-config attempts (see CASE 4 / CASE 2 below) -
+// CASE 3 (unattended scheduled wake) deliberately skips this: popping open
+// an AP and staying awake with nobody there to fix it would just drain the
+// battery until the next button press.
+void startFallbackAP() {
+    Serial.println("Could not join the saved WiFi network - reopening VerhoBot-Setup so it can be fixed.");
+    inFallbackAP = true;
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP("VerhoBot-Setup", "12345678");
+    Serial.print("AP IP: "); Serial.println(WiFi.softAPIP());
+}
+
 void setup() {
     Serial.begin(115200);
     delay(100);
@@ -1308,7 +1350,7 @@ void setup() {
         return;
     }
 
-    // ---- CASE 2: Woken by button ----
+    // ---- CASE 2: when Woken by button ----
     // ESP32-C3: GPIO wakeup reports ESP_SLEEP_WAKEUP_GPIO, not EXT1
     // (see the matching fix in enterDeepSleep()).
 #if CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3
@@ -1321,12 +1363,14 @@ void setup() {
         if (curtainPos < 0.1f) startClose(CURTAIN_TRAVEL_TIME);
         else startOpen(CURTAIN_TRAVEL_TIME);
         // Connect to WiFi so dashboard works
-        WiFi.begin(wifiSSID.c_str(), wifiPass.c_str());
-        int attempts = 0;
-        while (WiFi.status() != WL_CONNECTED && attempts < 20) { delay(250); attempts++; }
-        if (WiFi.status() == WL_CONNECTED) {
+        if (connectSTA(WIFI_CONNECT_TIMEOUT_MS)) {
             Serial.print("STA IP: "); Serial.println(WiFi.localIP());
             syncTime(); // optional
+        } else {
+            // Someone's physically at the device (they just pressed the
+            // button) - worth giving them a way to fix bad credentials
+            // rather than silently failing.
+            startFallbackAP();
         }
         startWebServer();
         awakeStart = millis();
@@ -1336,10 +1380,13 @@ void setup() {
     // ---- CASE 3: Woken by timer (scheduled) ----
     if (cause == ESP_SLEEP_WAKEUP_TIMER) {
         Serial.println("Woken by timer! Connecting to WiFi...");
-        WiFi.begin(wifiSSID.c_str(), wifiPass.c_str());
-        int attempts = 0;
-        while (WiFi.status() != WL_CONNECTED && attempts < 20) { delay(250); attempts++; }
-        if (WiFi.status() == WL_CONNECTED) {
+        // Deliberately no AP fallback here: this is an unattended scheduled
+        // wake. Popping open an AP and staying awake (AP mode never sleeps -
+        // see loop()) with nobody there to fix it would just drain the
+        // battery until someone notices. Skip the move and retry at the
+        // next scheduled wake instead - see the unsynced-clock guard in
+        // enterDeepSleep() for how the retry timing stays sane.
+        if (connectSTA(WIFI_CONNECT_TIMEOUT_MS)) {
             Serial.print("STA IP: "); Serial.println(WiFi.localIP());
             if (syncTime()) {
                 Serial.println("NTP synced: " + getTimeString());
@@ -1365,12 +1412,15 @@ void setup() {
 
     // ---- CASE 4: Normal boot (after restart / power‑on) ----
     Serial.println("Normal boot. Connecting to WiFi...");
-    WiFi.begin(wifiSSID.c_str(), wifiPass.c_str());
-    int attempts = 0;
-    while (WiFi.status() != WL_CONNECTED && attempts < 20) { delay(250); attempts++; }
-    if (WiFi.status() == WL_CONNECTED) {
+    if (connectSTA(WIFI_CONNECT_TIMEOUT_MS)) {
         Serial.print("STA IP: "); Serial.println(WiFi.localIP());
         syncTime();
+    } else {
+        // This is the exact case that used to leave the device unreachable:
+        // configured==true so CASE 1's AP never runs, but if the saved
+        // SSID/password don't actually work, there was previously no way
+        // back in short of re-flashing or erasing Preferences.
+        startFallbackAP();
     }
     startWebServer();
     awakeStart = millis();  // stay awake for 60s then sleep
@@ -1383,8 +1433,18 @@ void loop() {
     server.handleClient();
     updateMotor();
 
-    // ---- AP mode: stay awake forever ----
+    // ---- AP mode: stay awake ----
     if (WiFi.getMode() == WIFI_AP) {
+        // The never-configured setup AP (CASE 1) stays up indefinitely -
+        // that's an out-of-box, actively-being-set-up state.
+        // The fallback AP (saved credentials failed to connect) is bounded:
+        // if nobody connects to fix it within AP_FALLBACK_TIMEOUT_MS, give
+        // up and go back to sleep to retry the saved network later, rather
+        // than burning battery broadcasting an AP with nobodye around.
+        if (inFallbackAP && millis() - awakeStart > AP_FALLBACK_TIMEOUT_MS) {
+            Serial.println("No one connected to the fallback AP in time - sleeping to retry the saved network later.");
+            enterDeepSleep();
+        }
         return;
     }
 
