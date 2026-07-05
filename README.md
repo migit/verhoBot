@@ -235,6 +235,14 @@ VerhoBot follows a few simple rules:
 
 ---
 
+## Demo
+
+#Dashboard preview:
+
+https://github.com/user-attachments/assets/5031eaf6-3a84-4150-b1cb-e4931ba00093
+
+
+
 ## Contributing
 
 Contributions, ideas, testing feedback, and hardware improvements are welcome.
