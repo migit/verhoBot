@@ -1,7 +1,3 @@
-
-
-https://github.com/user-attachments/assets/f727beac-c3cd-45c5-90aa-1bad3a5c13f2
-
 <!-- # VerhoBot
 <img width="1536" height="1024" alt="verho_concept_design" src="https://github.com/user-attachments/assets/45290109-c627-40e5-b835-4a0c27403841" /> 
 <img width="1536" height="1024" alt="verho_b" src="https://github.com/user-attachments/assets/ea8144e8-805f-48bb-890e-384471ef9897" /> -->
@@ -243,11 +239,7 @@ VerhoBot follows a few simple rules:
 
 #Dashboard preview:
 
-
-https://github.com/user-attachments/assets/b39b7059-4248-4aeb-96c1-e5147c53eec8
-
-
-
+https://github.com/user-attachments/assets/f727beac-c3cd-45c5-90aa-1bad3a5c13f2
 
 
 ## Contributing
