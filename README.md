@@ -104,7 +104,7 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 ## Hardware
 
-### Planned Electronics
+###  Electronics
 
 | Component | Purpose |
 |------------|----------|
@@ -120,7 +120,7 @@ Whether you are building your first ESP32 project or developing advanced automat
 <img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/dab667c9-d4ce-4847-ab22-8194f0a0e182" />
 
 
-### Planned Mechanical Design
+###  Mechanical Design
 
 <img width="1536" height="1024" alt="vbot1" src="https://github.com/user-attachments/assets/3202e9c1-f443-4a04-8838-7c1d054d3fdf" />
 
@@ -149,25 +149,25 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 ### Phase 1
 
 
-- Basic motor control
-- Position calibration
-- Manual open/close control
+- Basic motor control [Done]
+- Position calibration [Done]
+- Manual open/close control [Done]
 
 ### Phase 2
 
-- Scheduling system
-- Battery monitoring
-- Configuration interface
+- Scheduling system [Done]
+- Battery monitoring [Done]
+- Configuration interface [Done] 
 
 ### Phase 3
 
-- Home Assistant integration
-- OTA updates
-- Smart automation features
+- Home Assistant integration [Pending...]
+- OTA updates [Done]
+- Smart automation features [Pending...]
 
 ---
 
-## Planned operation
+## operation
 
 <!-- <img width="1264" height="833" alt="op_mode" src="https://github.com/user-attachments/assets/f6f8d905-06a9-4c95-84db-494406e7b41f" /> -->
 <img width="969" height="1033" alt="VerhoBot - visual selection" src="https://github.com/user-attachments/assets/88effa7d-0860-4459-9377-e51b27e27843" />
@@ -181,6 +181,17 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 - During the 60‑second awake window, you can open your browser, go to the device’s IP (shown in Serial), and see the full dashboard, control the curtain, and check telemetry.
 - After 60 s of inactivity, it goes back to deep sleep.
 
+## Quick Troubleshooting:
+
+- It restarts automatically after saving, and should join your home WiFi. The VerhoBot-Setup network will disappear (expected — that's the sign it's now trying your real WiFi).
+- Find it on your network. It'll get an IP from your router. Easiest way: check your router's connected-devices list for "verhobot" or similar, or use a phone WiFi scanner app / your router admin page. There's no verhobot.local mDNS support yet, so this is the one manual step for now.
+- Open the dashboard at that IP. You should see the schedule card showing your configured open/close times and a live countdown to the next action.
+If it doesn't show up on your network within a minute or two, it likely couldn't connect (wrong password, wrong network, etc.) — with the fix from earlier, it'll fall back to broadcasting VerhoBot-Setup again so you can fix the credentials. Reconnect to that and try /setup again.
+- Calibrate the position once it's mounted on the actual curtain rail — run it fully open and fully closed once, then use the "set as fully open / fully closed" buttons on the dashboard so the tracked position matches reality (it's timing-based, not sensor-based, so it can drift).
+- Mount it and let it run unattended — check back around your first scheduled open/close time to confirm it moves as expected, then it should just run on its own, waking briefly at each scheduled event and sleeping the rest of the time.
+
+- If it connects fine and everything looks right, you're basically done — just keep an eye on battery level on the dashboard for the first few days to get a sense of how long it lasts between charges.
+
 ## Project Status
 
 ```text
@@ -189,12 +200,14 @@ v_0.1.0-beta1.2  -> Firmware complete
 v_0.1.0-beta1.1  -> Testing and tuning
 v_0.1.0-beta1  ->   Manual open/close control
 v1.0  -> Stable release
+v1.1  -> Stable with Improved dashboard
+V1.2  -> OTA feature added
 
 ```
 
-Active development is ongoing.
+Active patching is ongoing but stable phase.
 
----
+--- 
 
 ## Design Principles
 
@@ -206,7 +219,7 @@ VerhoBot follows a few simple rules:
 - Low power consumption
 - Easy to build
 - Easy to modify
-- No vendor lock-in
+- No vendor lock-in (you own everything)
 
 ---
 
