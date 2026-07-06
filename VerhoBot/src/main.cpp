@@ -816,6 +816,8 @@ let pollDelay=2000;
 const POLL_MIN=2000, POLL_MAX=10000;
 let consecutiveFailures=0;
 let lastKeepalive=0;
+const sessionStart=Date.now();
+const MAX_KEEPALIVE_SESSION_MS=10*60*1000; // 10 min - a forgotten background tab must not block sleep forever
 
 async function fetchWithTimeout(url,opts={},ms=4000){
   const ctrl=new AbortController();
@@ -855,9 +857,14 @@ async function poll(){
     consecutiveFailures=0;
     pollDelay=POLL_MIN;
 
-    // Keep the dashboard's own session alive so browsing it doesn't get cut
-    // off by the device's auto-sleep timer, but don't spam it.
-    if(d.mode==='sta' && d.state==='idle' && Date.now()-lastKeepalive>15000){
+    // Keep the dashboard's own session alive so actively watching it doesn't
+    // get cut off by the device's auto-sleep timer - but only while the tab
+    // is actually visible/focused, and only for a bounded window. Without
+    // both checks, simply leaving a tab open in the background would keep
+    // the device awake indefinitely and defeat deep sleep entirely.
+    const withinSessionCap=(Date.now()-sessionStart)<MAX_KEEPALIVE_SESSION_MS;
+    if(d.mode==='sta' && d.state==='idle' && !document.hidden && withinSessionCap
+       && Date.now()-lastKeepalive>15000){
       lastKeepalive=Date.now();
       fetchWithTimeout('/keepalive',{},3000).catch(()=>{});
     }

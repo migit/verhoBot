@@ -10,8 +10,14 @@
 // ---- Battery Voltage Divider ----
 #define BATTERY_ADC 0
 
-// ---- Wake Button (BOOT button on ESP32‑C3 SuperMini, GPIO9) ----
-#define WAKE_BUTTON_PIN 9
+// ---- Wake Button ----
+// The ESP32-C3's onboard BOOT button is on GPIO9 - but the C3 only supports
+// waking from DEEP sleep on GPIO0-5 (GPIO9 can wake from light sleep or
+// trigger a normal reset, but not this). So the wake button can not be the
+// module's built-in BOOT button; it has to be a separate button wired to
+// one of GPIO0-5. GPIO1 is the only one of those not already used by the
+// motor driver or battery sense, so that is what this needs to be wired to.
+#define WAKE_BUTTON_PIN 1
 
 // ---- Motor timing ----
 #define CURTAIN_TRAVEL_TIME 4000   // ms for full travel (will be auto‑calibrated later)
