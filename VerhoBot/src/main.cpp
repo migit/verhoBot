@@ -5,6 +5,7 @@
 #include <time.h>
 #include <esp_sleep.h>
 #include <ArduinoJson.h>
+#include <Update.h>
 
 #include "pins.h"
 
@@ -37,7 +38,10 @@ int    openMin  = 0;
 int    closeHour = 22;
 int    closeMin  = 0;
 String tzString  = TIMEZONE_STRING;
+String otaToken  = ""; // empty = OTA disabled until set in /setup
 bool   configured = false;
+bool   otaInProgress = false; // guards against deep-sleeping mid-flash-write
+bool   otaAuthFailed = false; // set when the passcode check fails; checked before reboot
 
 // Web server
 WebServer server(80);
@@ -168,7 +172,7 @@ float readBatteryVoltage() {
 // ============================================================
 //  Preferences (save / load / clear)
 // ============================================================
-void saveConfig(String ssid, String pass, int oh, int om, int ch, int cm, String tz) {
+void saveConfig(String ssid, String pass, int oh, int om, int ch, int cm, String tz, String ota) {
     prefs.begin("verhobot", false);
     prefs.putString("ssid", ssid);
     prefs.putString("pass", pass);
@@ -177,6 +181,7 @@ void saveConfig(String ssid, String pass, int oh, int om, int ch, int cm, String
     prefs.putInt("closeH", ch);
     prefs.putInt("closeM", cm);
     prefs.putString("tz", tz);
+    prefs.putString("ota", ota);
     prefs.putBool("configured", true);
     prefs.end();
 }
@@ -190,6 +195,7 @@ void loadConfig() {
     closeHour  = prefs.getInt("closeH", 22);
     closeMin   = prefs.getInt("closeM", 0);
     tzString   = prefs.getString("tz", TIMEZONE_STRING);
+    otaToken   = prefs.getString("ota", "");
     configured = prefs.getBool("configured", false);
     prefs.end();
 }
@@ -810,6 +816,8 @@ let pollDelay=2000;
 const POLL_MIN=2000, POLL_MAX=10000;
 let consecutiveFailures=0;
 let lastKeepalive=0;
+const sessionStart=Date.now();
+const MAX_KEEPALIVE_SESSION_MS=10*60*1000; // 10 min - a forgotten background tab must not block sleep forever
 
 async function fetchWithTimeout(url,opts={},ms=4000){
   const ctrl=new AbortController();
@@ -849,9 +857,14 @@ async function poll(){
     consecutiveFailures=0;
     pollDelay=POLL_MIN;
 
-    // Keep the dashboard's own session alive so browsing it doesn't get cut
-    // off by the device's auto-sleep timer, but don't spam it.
-    if(d.mode==='sta' && d.state==='idle' && Date.now()-lastKeepalive>15000){
+    // Keep the dashboard's own session alive so actively watching it doesn't
+    // get cut off by the device's auto-sleep timer - but only while the tab
+    // is actually visible/focused, and only for a bounded window. Without
+    // both checks, simply leaving a tab open in the background would keep
+    // the device awake indefinitely and defeat deep sleep entirely.
+    const withinSessionCap=(Date.now()-sessionStart)<MAX_KEEPALIVE_SESSION_MS;
+    if(d.mode==='sta' && d.state==='idle' && !document.hidden && withinSessionCap
+       && Date.now()-lastKeepalive>15000){
       lastKeepalive=Date.now();
       fetchWithTimeout('/keepalive',{},3000).catch(()=>{});
     }
@@ -1034,9 +1047,15 @@ a.back:hover{color:var(--accent);}
     <input id="tz" name="tz" placeholder="EET-2EEST,M3.5.0/3,M10.5.0/4">
     <div class="hint">POSIX TZ string, handles daylight saving automatically. Default is Europe/Helsinki. Find yours at <span style="white-space:nowrap">github.com/nayarsystems/posix_tz_db</span>.</div>
 
+    <h2>Firmware updates</h2>
+    <label for="ota">OTA passcode</label>
+    <input id="ota" name="ota" type="password" placeholder="Leave blank to keep current passcode">
+    <div class="hint" id="otaHint">Set this to enable wireless firmware updates at <span style="white-space:nowrap">/ota</span>. Leave blank to keep it unchanged; OTA stays disabled until a passcode is set at least once.</div>
+
     <button type="submit" id="submitBtn">Save &amp; restart</button>
   </form>
   <a class="back" href="/">&larr; back to dashboard</a>
+  <a class="back" href="/ota">firmware update &rarr;</a>
 </div>
 
 <script>
@@ -1054,6 +1073,7 @@ const $=id=>document.getElementById(id);
     if(c.openHour!==undefined) $('openTime').value=String(c.openHour).padStart(2,'0')+':'+String(c.openMin).padStart(2,'0');
     if(c.closeHour!==undefined) $('closeTime').value=String(c.closeHour).padStart(2,'0')+':'+String(c.closeMin).padStart(2,'0');
     if(c.tz) $('tz').value=c.tz;
+    if(c.otaSet) $('otaHint').textContent='A passcode is already set. Leave blank to keep it, or enter a new one to change it.';
   }catch(err){ /* fresh device, or AP mode before first save - fields just stay blank */ }
 })();
 
@@ -1109,6 +1129,7 @@ void handleSave() {
     String openT = server.arg("openTime");
     String closeT = server.arg("closeTime");
     String tz = server.arg("tz");
+    String ota = server.arg("ota");
 
     if (ssid.length() == 0) {
         server.send(400, "text/plain", "SSID is required");
@@ -1130,8 +1151,9 @@ void handleSave() {
     // schedule - don't force them to retype WiFi credentials every time.
     if (pass.length() == 0) pass = wifiPass;
     if (tz.length() == 0) tz = tzString.length() ? tzString : String(TIMEZONE_STRING);
+    if (ota.length() == 0) ota = otaToken; // blank = keep existing OTA passcode (or stay unset)
 
-    saveConfig(ssid, pass, oh, om, ch, cm, tz);
+    saveConfig(ssid, pass, oh, om, ch, cm, tz, ota);
     String response = "<html><body><h2>✅ Saved!</h2><p>Restarting...</p>"
                       "<meta http-equiv='refresh' content='3;url=/'>"
                       "</body></html>";
@@ -1207,6 +1229,7 @@ void handleConfigGet() {
     doc["closeHour"] = closeHour;
     doc["closeMin"] = closeMin;
     doc["tz"] = tzString;
+    doc["otaSet"] = (otaToken.length() > 0); // never return the token itself
     String out;
     serializeJson(doc, out);
     server.sendHeader("Cache-Control", "no-cache");
@@ -1253,6 +1276,151 @@ void handleIP() {
     server.send(200, "text/plain", WiFi.localIP().toString());
 }
 
+// ============================================================
+//  OTA firmware update
+// ============================================================
+// Gated behind a passcode set in /setup (blank = OTA stays disabled).
+// Deliberately NOT auto-checked on any wake cycle - only triggered manually
+// from this page, so it can't turn a scheduled wake into a surprise flash.
+const char PAGE_OTA[] PROGMEM = R"rawhtml(
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VerhoBot Firmware Update</title>
+<style>
+:root{--bg:#f5f4f0;--ink:#1a1a1a;--mute:#8a8a85;--rule:#c8c7c0;--accent:#c2560c;--mono:'Courier New',monospace;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);padding:2rem 1rem;}
+.wrap{max-width:420px;margin:0 auto;}
+.logo{font-family:var(--mono);font-size:1.2rem;margin-bottom:1.5rem;}
+.logo b{color:var(--accent);}
+label{display:block;margin-top:1rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#3a3a3a;}
+input{width:100%;padding:.6rem .5rem;font-size:.9rem;border:1px solid var(--rule);background:#fff;margin-top:4px;}
+.hint{font-family:var(--mono);font-size:.5rem;color:var(--mute);margin-top:4px;line-height:1.5;}
+button{margin-top:1.5rem;padding:.8rem 1.5rem;background:var(--accent);color:#fff;border:none;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;font-size:.75rem;cursor:pointer;width:100%;}
+button:disabled{opacity:.5;}
+.bar{height:6px;background:#eee;margin-top:1rem;display:none;}
+.bar.show{display:block;}
+.bar-fill{height:100%;width:0%;background:var(--accent);transition:width .2s;}
+.msg{font-family:var(--mono);font-size:.6rem;padding:8px 10px;margin-top:1rem;display:none;}
+.msg.show{display:block;}
+.msg.ok{border:1px solid #1a6b3a;color:#1a6b3a;}
+.msg.err{border:1px solid #8b1a1a;color:#8b1a1a;}
+a{color:var(--mute);font-family:var(--mono);font-size:.6rem;text-decoration:none;display:inline-block;margin-top:1.2rem;}
+</style></head><body><div class="wrap">
+<div class="logo">VERHO<b>/BOT</b> &middot; firmware update</div>
+<div class="msg" id="msg"></div>
+<form id="form">
+  <label>Passcode</label>
+  <input type="password" id="token" required>
+  <div class="hint">Set in /setup. The device restarts automatically once the write finishes.</div>
+  <label>Firmware .bin</label>
+  <input type="file" id="file" accept=".bin" required>
+  <div class="bar" id="bar"><div class="bar-fill" id="barfill"></div></div>
+  <button type="submit" id="btn">Upload &amp; flash</button>
+</form>
+<a href="/">&larr; back to dashboard</a>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+$('form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const file=$('file').files[0];
+  const token=$('token').value;
+  if(!file){return;}
+  const msg=$('msg'); msg.className='msg';
+  $('btn').disabled=true; $('btn').textContent='Uploading…';
+  $('bar').className='bar show';
+
+  const xhr=new XMLHttpRequest();
+  xhr.open('POST','/update?token='+encodeURIComponent(token));
+  xhr.upload.onprogress=function(ev){
+    if(ev.lengthComputable){
+      $('barfill').style.width=Math.round(ev.loaded/ev.total*100)+'%';
+    }
+  };
+  xhr.onload=function(){
+    if(xhr.status===200 && xhr.responseText.indexOf('OK')===0){
+      msg.textContent='Flashed OK — VerhoBot is restarting…';
+      msg.className='msg ok show';
+    } else {
+      msg.textContent='Update failed: '+(xhr.responseText||('HTTP '+xhr.status));
+      msg.className='msg err show';
+      $('btn').disabled=false; $('btn').textContent='Upload & flash';
+    }
+  };
+  xhr.onerror=function(){
+    msg.textContent='Connection lost during upload.';
+    msg.className='msg err show';
+    $('btn').disabled=false; $('btn').textContent='Upload & flash';
+  };
+  const fd=new FormData();
+  fd.append('firmware', file);
+  xhr.send(fd);
+});
+</script></body></html>
+)rawhtml";
+
+void handleOTAPage() {
+    server.send_P(200, "text/html", PAGE_OTA);
+}
+
+// Runs once, after the whole multipart body (including the file) has been
+// received and either written successfully or failed.
+void handleUpdateResult() {
+    server.sendHeader("Connection", "close");
+    if (otaAuthFailed) {
+        otaAuthFailed = false;
+        server.send(403, "text/plain", "FAIL - incorrect passcode");
+        return;
+    }
+    if (Update.hasError()) {
+        server.send(200, "text/plain", "FAIL - see serial log for details");
+    } else {
+        server.send(200, "text/plain", "OK - rebooting");
+        delay(500);
+        ESP.restart();
+    }
+}
+
+// Runs repeatedly as upload chunks arrive.
+void handleUpdateUpload() {
+    HTTPUpload &upload = server.upload();
+
+    if (upload.status == UPLOAD_FILE_START) {
+        String token = server.arg("token"); // query string, parsed before body
+        if (otaToken.length() == 0 || token != otaToken) {
+            Serial.println("OTA rejected: missing/incorrect passcode");
+            otaAuthFailed = true;
+            otaInProgress = false;
+            return;
+        }
+        otaAuthFailed = false;
+        Serial.printf("OTA update starting: %s\n", upload.filename.c_str());
+        otaInProgress = true; // block deep sleep until this resolves
+        motorStop();          // don't let a flash write race a curtain move
+        if (!Update.begin(UPDATE_SIZE_UNKNOWN)) {
+            Update.printError(Serial);
+        }
+    } else if (upload.status == UPLOAD_FILE_WRITE) {
+        if (otaAuthFailed) return; // auth failed at START, ignore the rest of the body
+        if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
+            Update.printError(Serial);
+        }
+    } else if (upload.status == UPLOAD_FILE_END) {
+        otaInProgress = false;
+        if (otaAuthFailed) return; // nothing was ever written, handleUpdateResult() reports it
+        if (Update.end(true)) {
+            Serial.printf("OTA update successful: %u bytes\n", upload.totalSize);
+        } else {
+            Update.printError(Serial);
+        }
+    } else if (upload.status == UPLOAD_FILE_ABORTED) {
+        otaInProgress = false;
+        if (!otaAuthFailed) Update.end();
+        Serial.println("OTA update aborted");
+    }
+}
+
 void startWebServer() {
     server.on("/",          handleRoot);
     server.on("/setup",     handleSetup);
@@ -1266,6 +1434,8 @@ void startWebServer() {
     server.on("/status",    handleStatus);
     server.on("/config",    handleConfigGet);
     server.on("/ip",        handleIP);
+    server.on("/ota",       handleOTAPage);
+    server.on("/update",    HTTP_POST, handleUpdateResult, handleUpdateUpload);
     server.begin();
     Serial.println("Web server started");
 }
@@ -1350,7 +1520,7 @@ void setup() {
         return;
     }
 
-    // ---- CASE 2: when Woken by button ----
+    // ---- CASE 2: Woken by button ----
     // ESP32-C3: GPIO wakeup reports ESP_SLEEP_WAKEUP_GPIO, not EXT1
     // (see the matching fix in enterDeepSleep()).
 #if CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3
@@ -1440,7 +1610,7 @@ void loop() {
         // The fallback AP (saved credentials failed to connect) is bounded:
         // if nobody connects to fix it within AP_FALLBACK_TIMEOUT_MS, give
         // up and go back to sleep to retry the saved network later, rather
-        // than burning battery broadcasting an AP with nobodye around.
+        // than burning battery broadcasting an AP with nobody around.
         if (inFallbackAP && millis() - awakeStart > AP_FALLBACK_TIMEOUT_MS) {
             Serial.println("No one connected to the fallback AP in time - sleeping to retry the saved network later.");
             enterDeepSleep();
@@ -1449,7 +1619,11 @@ void loop() {
     }
 
     // ---- STA mode: sleep after 60s of idle ----
-    if (state == IDLE) {
+    if (otaInProgress) {
+        // A firmware upload can easily take longer than AWAKE_TIMEOUT on a
+        // slow network - never let it get cut off by a deep sleep mid-write.
+        awakeStart = millis();
+    } else if (state == IDLE) {
         if (millis() - awakeStart > AWAKE_TIMEOUT) {
             enterDeepSleep();
         }
