@@ -206,7 +206,7 @@ v_0.1.0-beta1  ->   Manual open/close control
 v1.0  -> Stable release
 v1.1  -> Stable with Improved dashboard
 V1.2  -> OTA feature added
-
+V1.2.1 -> Fixed a boot button deep sleep wake to GPIO1 as esp32-c3 does not support this
 ```
 
 Active patching is ongoing but stable phase.
