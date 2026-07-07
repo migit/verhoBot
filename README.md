@@ -61,7 +61,7 @@ Built around the ESP32 platform, VerhoBot aims to be affordable, repairable, ope
 
 ### Planned Features
 
-- Scheduled curtain control
+- Scheduled curtain control 
 - Sunrise and sunset automation
 - Home Assistant integration
 - Mobile configuration
@@ -123,6 +123,8 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 <img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/dab667c9-d4ce-4847-ab22-8194f0a0e182" />
 
+### PCB design
+-PCB design is active now, I will release the first draft, so that the community can comment on it before it is has been manufactured (Help is wanted here)
 
 ###  Mechanical Design
 
@@ -131,7 +133,7 @@ Whether you are building your first ESP32 project or developing advanced automat
 - Compact form factor
 - Rail-mounted operation
 - Existing curtain compatibility
-- 3D-printable enclosure
+- 3D-printable enclosure built arround the designed PCB board
 - Modular internal architecture
 
 [▶ Video demo VerhoBot enclosure and mechanical design](https://www.youtube.com/watch?v=YXQe8-dixHU)
@@ -139,12 +141,11 @@ Whether you are building your first ESP32 project or developing advanced automat
 [▶ Video full build steps](https://www.youtube.com/watch?v=6-GEg8fdRDQ) 
 
 
-Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
+[3D CAD files here](https://www.thingiverse.com/thing:7370927)
 
 ### Parts
 
 <img width="4080" height="3072" alt="VerhoBot_parts" src="https://github.com/user-attachments/assets/a81883dd-afa9-40b6-8be4-5f3731d33b52" />
-
 
 ---
 
@@ -165,8 +166,8 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
 ### Phase 3
 
-- Home Assistant integration [Pending...]
 - OTA updates [Done]
+- Home Assistant integration [Pending...]
 - Smart automation features [Pending...]
 
 ---
@@ -178,23 +179,23 @@ Pre-release 3D CAD files [here](https://www.thingiverse.com/thing:7370927)
 
 
 ## How it suppose to behave:
-- First boot → AP VerhoBot-Setup → dashboard at 192.168.4.1 → click ⚙ to enter WiFi & schedule → save → reboot.
-- Normal operation → connects to home WiFi → syncs time → sleeps.
-- Scheduled wake → moves curtain → starts web server → stays awake 60 s → sleeps.
-- Button wake → toggles curtain → starts web server → stays awake 60 s → sleeps.
+- First boot -> AP VerhoBot-Setup -> dashboard at 192.168.4.1 -> click ⚙ to enter WiFi & schedule -> save -> reboot.
+- Normal operation -> connects to home WiFi -> syncs time -> sleeps.
+- Scheduled wake -> moves curtain -> starts web server -> stays awake 60 s -> sleeps.
+- Button wake -> toggles curtain -> starts web server -> stays awake 60 s -> sleeps.
 - During the 60‑second awake window, you can open your browser, go to the device’s IP (shown in Serial), and see the full dashboard, control the curtain, and check telemetry.
 - After 60 s of inactivity, it goes back to deep sleep.
 
 ## Quick Troubleshooting:
 
-- It restarts automatically after saving, and should join your home WiFi. The VerhoBot-Setup network will disappear (expected — that's the sign it's now trying your real WiFi).
+- It restarts automatically after saving, and should join your home WiFi. The VerhoBot-Setup network will disappear (expected - that's the sign it's now trying your real WiFi).
 - Find it on your network. It'll get an IP from your router. Easiest way: check your router's connected-devices list for "verhobot" or similar, or use a phone WiFi scanner app / your router admin page. There's no verhobot.local mDNS support yet, so this is the one manual step for now.
 - Open the dashboard at that IP. You should see the schedule card showing your configured open/close times and a live countdown to the next action.
-If it doesn't show up on your network within a minute or two, it likely couldn't connect (wrong password, wrong network, etc.) — with the fix from earlier, it'll fall back to broadcasting VerhoBot-Setup again so you can fix the credentials. Reconnect to that and try /setup again.
-- Calibrate the position once it's mounted on the actual curtain rail — run it fully open and fully closed once, then use the "set as fully open / fully closed" buttons on the dashboard so the tracked position matches reality (it's timing-based, not sensor-based, so it can drift).
-- Mount it and let it run unattended — check back around your first scheduled open/close time to confirm it moves as expected, then it should just run on its own, waking briefly at each scheduled event and sleeping the rest of the time.
+If it doesn't show up on your network within a minute or two, it likely couldn't connect (wrong password, wrong network, etc.) - with the fix from earlier, it'll fall back to broadcasting VerhoBot-Setup again so you can fix the credentials. Reconnect to that and try /setup again.
+- Calibrate the position once it's mounted on the actual curtain rail - run it fully open and fully closed once, then use the "set as fully open / fully closed" buttons on the dashboard so the tracked position matches reality (it's timing-based, not sensor-based, so it can drift).
+- Mount it and let it run unattended - check back around your first scheduled open/close time to confirm it moves as expected, then it should just run on its own, waking briefly at each scheduled event and sleeping the rest of the time.
 
-- If it connects fine and everything looks right, you're basically done — just keep an eye on battery level on the dashboard for the first few days to get a sense of how long it lasts between charges.
+- If it connects fine and everything looks right, you're basically done - just keep an eye on battery level on the dashboard for the first few days to get a sense of how long it lasts between charges.
 
 ## Project Status
 
@@ -210,6 +211,15 @@ V1.2.1 -> Fixed a boot button deep sleep wake to GPIO1 as esp32-c3 does not supp
 ```
 
 Active patching is ongoing but stable phase.
+
+## Lesson Learned 
+
+- So far verhoBot is being tested for over two weeks, firmware bug is being fixed so plugging and unplugging the USB C was a headache, so impliment OTA at the early stage saved me time.
+- Control & config dashboard is being improved scheduling,OTA update, home wifi connect and curtain calibration (time based) are working flowlessly these are small features so working on them separately was a good idea even if they seem small and manageable.
+- On the hardware side wakr up GPIO has been added. Before, it was suppose to work with boot button press which the esp32-c super mini board does not support
+- The deep sleep has saved lots of battery life but the LED (I call it the terminator eye) glows in the dark was cool indicating the bot is on but still consumes battery life, in the future desoldering it from the board will defenetly save some more battery life.
+- The Li-Po battery I am using is 300mAh, still the bot runs for 6 days straight...(I will update this when I finish experimenting on it!).I leaned battery size (physical size) matters and as the battery gets bigger the form factor of the bot case changes I should have considered this before I designed the case but hey, now harm!
+
 
 --- 
 
@@ -227,7 +237,6 @@ VerhoBot follows a few simple rules:
 
 ---
 
-
 ## Future versions may incorporate:
 
 - Position sensing
@@ -244,7 +253,6 @@ VerhoBot follows a few simple rules:
 #Dashboard preview:
 
 https://github.com/user-attachments/assets/f727beac-c3cd-45c5-90aa-1bad3a5c13f2
-
 
 ## Contributing
 
