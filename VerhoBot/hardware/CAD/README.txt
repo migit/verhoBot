@@ -1,4 +1,171 @@
-VerhoBot by mythings3D on Thingiverse: https://www.thingiverse.com/thing:7370927
+# VerhoBot
 
-Summary:
-VerhoBot - Open Source Smart Curtain RobotVerhoBot is a compact, battery-powered smart curtain robot designed to automate existing curtain rails using affordable and widely available hardware.Built around the ESP32-C3 and an N20 geared motor, VerhoBot is designed to be easy to build, easy to modify, and fully open source. Whether you want a simple curtain timer or a fully integrated smart-home device, VerhoBot provides a flexible platform for makers, engineers, and DIY enthusiasts.Why VerhoBot?Many people use blackout curtains to improve sleep quality, but waking up naturally with sunlight is often just as important. VerhoBot can automatically open or close your curtains on a schedule, through a web interface, or through future smart-home integrations.The project was inspired by Finnish summers, where bright nights and early morning sunlight can make sleep schedules challenging.FeaturesESP32-C3 Super Mini basedBattery powered (LiPo)USB-C chargingN20 geared motor TB6612FNG motor driver Built-in Wi-Fi web control (Dashboard to configure and calibrate the bot, this is software side)Fully 3D printable enclosure (it is a stable release, just minor refinements are left)Open source firmware (constantly updating it just watch for the flasher firmware version hosted here:  https://myworks.gt.tc/verhobot/ )Modular hardware designDesigned for curtain railsLightweight and compactHardwareCurrent Version (V1)ESP32-C3 Super MiniN20 DC Geared Motor (100 RPM 6V works best without loosing good torgue and speed)TB6612FNG Motor Driver TP4056 Charging Module3.7V LiPo Battery  (300mAh is selected)MT3608 Boost Converter (this is optional if the TP4056 has a built in boost converter)Custom 3D Printed Housing and mechanical partsOpen SourceVerhoBot is intended as a community driven project.Future community extensions may include:Home Assistant IntegrationMQTT SupportMatter CompatibilityZigbee ConnectivityPosition TrackingAutomatic CalibrationObstacle DetectionBattery OptimizationSolar ChargingMobile ApplicationsContributions, remixes, and improvements are encouraged.Source Code &amp; DocumentationGitHub Repository:https://github.com/migit/verhoBotThe repository contains:Firmware (also hosted here: https://myworks.gt.tc/verhobot/)Electronics DocumentationSchematics3D ModelsBuild InstructionsFuture Development RoadmapBuild It. Improve It. Share It.VerhoBot is more than a curtain robot it is an open platform for learning embedded systems, mechanical design, battery-powered electronics, and smart-home automation.If you build one, remix it, improve it, or adapt it for your own project, please share your version with the community.Sleep in darkness. Wake up with sunlight.FIRMWARE IS NOW IN A STABLE VERSION !SUMMER TIME BREAK NOW!SO NOT MUCH SPENDING MY TIME PERFECTING THINGS ON THE HARDWARE SIDE, WE HAVE A WORKING BOT (VerhoBot V1.0)  WITH A CONTROL OF SOFTWARE TO DO ANYTHING YOU IMAGINE (HACK IT; PERFECT IT; AND MAKE IT BETTER) .TO BE CONTINUED...THANK YOU ALL SO MUCH FOR YOUR SUPPORT!!!Full build videohttps://www.youtube.com/watch?v=6-GEg8fdRDQTinkering demohttps://www.youtube.com/watch?v=YXQe8-dixHU
+**Designed by mythings3D on Thingiverse**
+**Thingiverse:** https://www.thingiverse.com/thing:7370927
+
+---
+
+# Summary
+
+**VerhoBot** is an open-source smart curtain robot designed to automate existing curtain rails using affordable, widely available hardware.
+
+Built around the **ESP32-C3 Super Mini** and an **N20 geared motor**, VerhoBot is easy to build, easy to modify, and completely open source. Whether you need a simple curtain timer or a fully featured smart-home device, VerhoBot provides a flexible platform for makers, engineers, and DIY enthusiasts.
+
+---
+
+# Why VerhoBot?
+
+Many people use blackout curtains to improve sleep quality, but waking up naturally with sunlight is just as important.
+
+VerhoBot automatically opens or closes your curtains:
+
+- On a schedule
+- Through a web interface
+- Via future smart-home integrations
+
+The project was inspired by Finnish summers, where bright nights and early morning sunlight can make maintaining a healthy sleep schedule difficult.
+
+---
+
+# Features
+
+- ESP32-C3 Super Mini based
+- Battery powered (LiPo)
+- USB-C charging
+- N20 geared motor
+- TB6612FNG motor driver
+- Built-in Wi-Fi web control dashboard
+- Configure and calibrate directly from the browser
+- Fully 3D printable enclosure *(stable release with only minor refinements remaining)*
+- Open-source firmware
+- Modular hardware design
+- Designed specifically for curtain rails
+- Lightweight and compact
+
+---
+
+# Firmware
+
+The firmware is continuously updated.
+
+Latest releases are available here:
+
+**Firmware Flasher:**
+
+https://myworks.gt.tc/verhobot/
+
+---
+
+# Hardware
+
+## Current Version (V1)
+
+- ESP32-C3 Super Mini
+- N20 DC Geared Motor
+  - Recommended: **100 RPM 6V**
+  - Good balance between speed and torque
+- TB6612FNG Motor Driver
+- TP4056 Charging Module
+- 3.7V LiPo Battery
+  - Recommended capacity: **300 mAh**
+- MT3608 Boost Converter *(optional if the TP4056 includes a built-in boost converter)*
+- Custom 3D printed enclosure and mechanical components
+
+---
+
+# Open Source
+
+VerhoBot is intended to be a community-driven project.
+
+Future community extensions may include:
+
+- Home Assistant integration
+- MQTT support
+- Matter compatibility
+- Zigbee connectivity
+- Position tracking
+- Automatic calibration
+- Obstacle detection
+- Battery optimization
+- Solar charging
+- Mobile applications
+
+Contributions, remixes, improvements, and pull requests are always welcome.
+
+---
+
+# Source Code & Documentation
+
+## GitHub Repository
+
+https://github.com/migit/verhoBot
+
+The repository contains:
+
+- Firmware
+- Firmware Flasher
+- Electronics documentation
+- Schematics
+- 3D models
+- Build instructions
+- Future development roadmap
+
+Firmware is also hosted here:
+
+https://myworks.gt.tc/verhobot/
+
+---
+
+# Philosophy
+
+> **Build it. Improve it. Share it.**
+
+VerhoBot is more than a curtain robot.
+
+It is an open platform for learning:
+
+- Embedded systems
+- Mechanical design
+- Battery-powered electronics
+- Smart-home automation
+
+If you build one, remix it, improve it, or adapt it for your own project, please share your version with the community.
+
+---
+
+# Current Project Status
+
+## Firmware is now in a stable version!
+
+### announcement 
+
+Development on the hardware side has slowed down for the summer.
+The current **VerhoBot V1.0** hardware is fully functional, while software development will continue to expand its capabilities.
+
+Now it's your turn:
+ 
+- Hack it
+- Improve it
+- Customize it
+- Make it even better
+---
+
+# Thank You
+
+Thank you all so much for your support!
+
+---
+
+# Videos
+
+## Full Build Video
+
+https://www.youtube.com/watch?v=6-GEg8fdRDQ
+
+## Tinkering Demo
+
+https://www.youtube.com/watch?v=YXQe8-dixHU
+
+---
+
+# Sleep in darkness. Wake up with sunlight.
