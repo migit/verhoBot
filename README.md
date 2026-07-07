@@ -14,7 +14,7 @@
 
 *Sleep in darkness. Wake up with sunlight.*
 
-[![Status](https://img.shields.io/badge/Status-In%20Development-orange)]()
+[![Status](https://img.shields.io/badge/Status-Evolving-purple)]()
 [![License](https://img.shields.io/badge/License-MIT-blue)]()
 [![Platform](https://img.shields.io/badge/Platform-ESP32-red)]()
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)]()
