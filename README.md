@@ -167,8 +167,11 @@ Whether you are building your first ESP32 project or developing advanced automat
 ### Phase 3
 
 - OTA updates [Done]
-- Home Assistant integration [Pending...]
-- Smart automation features [Pending...]
+- Web-based firmware flasher (Done,)
+- Home Assistant integration [Pending...for Version 2]
+- Smart automation features [Pending... for Version 2]
+
+### NOTE: All software, firware and hardware works of this project is complete and in stable version but verho bot is still evolving as V2 as next generation VerhoBot, meanning This repo (V1) will continue to be mainatined and evolve without affecting the OSHWA certification standard and what it promised to deliver. 
 
 ---
 
