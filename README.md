@@ -4,8 +4,9 @@
 <img width="1536" height="1024" alt="verho_concept_design" src="https://github.com/user-attachments/assets/45290109-c627-40e5-b835-4a0c27403841" /> 
 <img width="1536" height="1024" alt="verho_b" src="https://github.com/user-attachments/assets/ea8144e8-805f-48bb-890e-384471ef9897" /> -->
 
-<img width="1535" height="1024" alt="verho_banner" src="https://github.com/user-attachments/assets/6782ed62-eeb0-4958-a5c3-7888029129f1" />
+<!-- <img width="1535" height="1024" alt="verho_banner" src="https://github.com/user-attachments/assets/6782ed62-eeb0-4958-a5c3-7888029129f1" />  -->
 
+<img width="1535" height="1024" alt="verho_banner_white" src="https://github.com/user-attachments/assets/3a6c4d62-edfc-40f7-b2f0-12bc582d1462" />
 
 
 <div align="center">
