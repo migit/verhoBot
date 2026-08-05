@@ -1,6 +1,6 @@
 # VerhoBot
 
-**Designed by mythings3D on Thingiverse**
+**Designed by MikeMakesStuffs on Thingiverse**
 **Thingiverse:** https://www.thingiverse.com/thing:7370927
 
 ---
