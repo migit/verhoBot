@@ -1,5 +1,3 @@
-
-
 <!-- # VerhoBot
 <img width="1536" height="1024" alt="verho_concept_design" src="https://github.com/user-attachments/assets/45290109-c627-40e5-b835-4a0c27403841" /> 
 <img width="1536" height="1024" alt="verho_b" src="https://github.com/user-attachments/assets/ea8144e8-805f-48bb-890e-384471ef9897" /> -->
@@ -10,7 +8,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/aba6153e-b872-4d4a-9a58-02b24fb0d8ed">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/3c62a44f-5eb4-45b9-ac19-4e3e01b9b13d">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/56020f1e-bfad-4f00-b733-0ede581f7c40">
   <img width="100%" height="100%" alt="verho_banner" src="https://github.com/user-attachments/assets/3a6c4d62-edfc-40f7-b2f0-12bc582d1462">
 </picture>
 
