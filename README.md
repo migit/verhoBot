@@ -125,7 +125,12 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 ### schematic
 
-<img width="1536" height="1024" alt="VehoBot-schematic" src="https://github.com/user-attachments/assets/dab667c9-d4ce-4847-ab22-8194f0a0e182" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/5fd002bf-6933-44c8-951e-679d403ac9f6">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/78fb31f9-d5d8-4c3f-95c0-13649d746854">
+  <img width="100%" height="100%" alt="verho_banner" src="https://github.com/user-attachments/assets/3a6c4d62-edfc-40f7-b2f0-12bc582d1462">
+</picture>
+
 
 ### PCB design
 -PCB design is active now, I will release the first draft, so that the community can comment on it before it is has been manufactured (Help is wanted here)
