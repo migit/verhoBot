@@ -41,8 +41,6 @@ VerhoBot addresses this problem by providing a compact robotic platform capable 
 
 Unlike many commercial curtain robots, VerhoBot is designed from the beginning as an open-source project. Every aspect of the system including hardware design, firmware, mechanical components, and future software integrations is intended to be accessible, modifiable, and extensible by makers, students, engineers, and hobbyists.
 
-[![Watch VerhoBot Demo](https://vercel.app)](https://youtu.be/6-GEg8fdRDQ?si=6PpPOxxIadroxERF)
-
 
 **VerhoBot** solves both problems.
 
@@ -147,10 +145,19 @@ Whether you are building your first ESP32 project or developing advanced automat
 - 3D-printable enclosure built arround the designed PCB board
 - Modular internal architecture
 
-[▶ Video demo VerhoBot enclosure and mechanical design](https://www.youtube.com/watch?v=YXQe8-dixHU)
+[▶ Video demo VerhoBot enclosure and mechanical design]()
 
-[▶ Video full build steps](https://www.youtube.com/watch?v=6-GEg8fdRDQ) 
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=YXQe8-dixHU">
+    <img src="https://img.youtube.com/vi/YXQe8-dixHU/maxresdefault.jpg" alt="Watch the video" style="width:100%;max-width:560px;">
+  </a>
+</div>
 
+<div align="center">
+  <a href="https://youtu.be/6-GEg8fdRDQ?si=6PpPOxxIadroxERF">
+    <img src="https://img.youtube.com/vi/6-GEg8fdRDQ/maxresdefault.jpg" alt="Watch the video" style="width:100%;max-width:560px;">
+  </a>
+</div>
 
 [3D CAD files here](https://www.thingiverse.com/thing:7370927)
 
