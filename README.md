@@ -41,6 +41,8 @@ VerhoBot addresses this problem by providing a compact robotic platform capable 
 
 Unlike many commercial curtain robots, VerhoBot is designed from the beginning as an open-source project. Every aspect of the system including hardware design, firmware, mechanical components, and future software integrations is intended to be accessible, modifiable, and extensible by makers, students, engineers, and hobbyists.
 
+[![Watch VerhoBot Demo](https://vercel.app)](https://youtu.be/6-GEg8fdRDQ?si=6PpPOxxIadroxERF)
+
 
 **VerhoBot** solves both problems.
 
