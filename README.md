@@ -274,9 +274,7 @@ VerhoBot follows a few simple rules:
 
 ---
 
-## Demo
-
-#Dashboard preview:
+## Dashboard preview:
 
 https://github.com/user-attachments/assets/f727beac-c3cd-45c5-90aa-1bad3a5c13f2
 
