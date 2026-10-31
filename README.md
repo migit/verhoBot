@@ -163,7 +163,12 @@ Whether you are building your first ESP32 project or developing advanced automat
 
 <img width="4080" height="3072" alt="VerhoBot_parts" src="https://github.com/user-attachments/assets/a81883dd-afa9-40b6-8be4-5f3731d33b52" />
 
+<img width="3072" height="4080" alt="IMG_20261031_110942613" src="https://github.com/user-attachments/assets/37bce3fe-f37f-4b26-90ff-df9ec46aa339" />
+
+
 [Join the thingsverse community here](https://www.thingiverse.com/thing:7370927)
+
+
 
 ---
 
