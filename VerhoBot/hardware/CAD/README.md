@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="images/vb.png" alt="VerhoBot mounted on a curtain rail" width="100%">
-
 # VerhoBot · Hardware & CAD
 
 **The 3D-printable body, the drive wheel, and the electronics that live inside.**
@@ -20,7 +18,7 @@
 
 ---
 
-## 📐 At a glance
+## At a glance
 
 VerhoBot clips onto an ordinary curtain rail and drives itself along it with a single geared motor. Everything mechanical is printable on a hobby FDM printer. Four printed parts, a handful of fasteners, and a small N20 motor are all it takes.
 
@@ -35,7 +33,7 @@ VerhoBot clips onto an ordinary curtain rail and drives itself along it with a s
 
 ---
 
-## 🧩 The parts
+## The parts
 
 <div align="center">
 <img src="images/VerhoBot_parts.jpg" alt="Everything you need: printed parts, electronics, fasteners, and a caliper for scale" width="85%">
@@ -66,7 +64,7 @@ All files are binary STL, in millimetres, in the `files/` folder. Dimensions bel
 
 ---
 
-## 🔧 Bill of materials
+## Bill of materials
 
 ### Mechanical
 
@@ -92,12 +90,13 @@ All files are binary STL, in millimetres, in the `files/` folder. Dimensions bel
 
 ---
 
-## 🔌 Electronics
+##  Electronics
 
 The V1 build wires off-the-shelf modules together inside the housing. **V2 replaces that stack with a single custom board** so the whole thing gets smaller, cleaner, and easier to assemble.
 
 <div align="center">
-<img src="images/VerhoBot_V2_PCB_rev0.2.png" alt="VerhoBot V2 rev 0.2 PCB, 3D render" width="85%">
+  <img width="85%" height="865" alt="VerhoBot V2 rev 0.2 PCB, 3D render" src="https://github.com/user-attachments/assets/927865df-f764-402c-921e-59bf5cdedfd8" />
+
 <br><sub><b>VerhoBot V2, rev 0.2</b>: 3D render. The SuperMini plugs into the header row; USB-C, a tactile switch, test points, and the driver and power stages are all on-board.</sub>
 </div>
 
@@ -105,8 +104,8 @@ The V1 build wires off-the-shelf modules together inside the housing. **V2 repla
 
 | Generation | Status | What it is |
 |---|---|---|
-| **V1** | ✅ Fully functional | ESP32-C3 SuperMini + TB6612FNG + TP4056 modules, hand-wired |
-| **V2** | 🛠️ In development (rev 0.2) | One custom PCB, same functionality, designed to fit the housing |
+| **V1** | Fully functional | ESP32-C3 SuperMini + TB6612FNG + TP4056 modules, hand-wired |
+| **V2** | In development (rev 0.2) | One custom PCB, same functionality, designed to fit the housing |
 
 Schematics and board renders live one level up in [`../`](../): [V1 schematic](../verhoBotV1_schematic.png), [charging circuit](../verhoBot_charging.png), and the [earlier PCB render](../VerhoBot_3D_PCB1.0.png).
 
@@ -133,7 +132,7 @@ Schematics and board renders live one level up in [`../`](../): [V1 schematic](.
 
 ---
 
-## 📁 Folder layout
+## Folder layout
 
 ```
 CAD/
@@ -149,7 +148,7 @@ CAD/
 
 ---
 
-## 🤝 Remix it
+## Remix it
 
 The mechanical design is a **stable release with only minor refinements remaining**, and that is exactly what makes it a good base for remixes. Ideas that would be welcome:
 
@@ -165,12 +164,12 @@ If you build one, remix it, or adapt it, **please share it back**. Open a pull r
 
 ---
 
-## 📜 License & credits
+## License & credits
 
 - **CAD files** (everything in this folder): [Creative Commons Attribution – Share Alike](LICENSE.txt). Use, remix, and redistribute them, give credit, and share your changes under the same terms.
 - **Rest of the project:** see the [main repository](https://github.com/migit/verhoBot) for firmware and electronics licensing. The project is [OSHWA-certified (FI000004)](https://certification.oshwa.org/).
 
-Designed by **MikeMakesStuffs** (Thingiverse: `mythings3D`) in Finland, for Finnish summers. ☀️🌙
+Designed by **MikeMakesStuffs** (Thingiverse: `mythings3D`) in Finland, for Finnish summers.
 
 <div align="center">
 
